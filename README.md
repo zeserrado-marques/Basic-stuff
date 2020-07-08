@@ -9,3 +9,6 @@ Basic scripts in python and imageJ macro language
 ### ImageJ Macro
 **CziToTiff_macro.ijm**
 - Script that saves .czi image files as .tif files
+
+**MIP_concat_timeseries_for_positions.ijm**
+- Script that opens a single position from a .czi file and does a Maximum intensity projection (MIP) and concatenates images into a single file as a time series. Does this for how many positions you want.
