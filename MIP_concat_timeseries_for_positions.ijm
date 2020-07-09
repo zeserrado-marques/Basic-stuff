@@ -1,4 +1,4 @@
-/* Macro to make MIP (maximum intensity projection) of z-stack images wtih multiple and join time series images 
+/* Macro to make MIP (maximum intensity projection) of z-stack images with multiple and concatenate separate images into a single timelapse image 
  * taken using mouse recorder pro setup on zeiss imager with ZEN software without timelapse module
  * 
  * By José Serrado Marques
