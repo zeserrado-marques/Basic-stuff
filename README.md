@@ -1,4 +1,4 @@
-# Basic-shit
+# Basic-stuff
 Basic scripts in python and imageJ macro language
 
 ### Python
