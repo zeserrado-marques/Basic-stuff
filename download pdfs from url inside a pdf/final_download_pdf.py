@@ -34,7 +34,7 @@ names_pdf_lst = list()
 for tuple in lst_titles:
     number, title = tuple
     title = title.replace(" ", "_")
-    title = title:replace(":", "_")
+    title = title.replace(":", "_")
     title = title.replace("/", "_")
     names_pdf_lst.append(number + "_" + title)
 
