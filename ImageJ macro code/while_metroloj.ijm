@@ -1,5 +1,5 @@
 /*
- * Macro to facilitate PSF measurement with metroloJ.
+ * Macro to facilitate PSF measurement with metroloJ. PSF iamge needs to be open
  * Currently works only for single channel images.
  * 
  * Dependencies:
@@ -7,7 +7,6 @@
  * - iText library v2.1.4
  * 
  * Soon to come:
- * - user input
  * - measure for different channels
  * 
  * 
@@ -16,27 +15,44 @@
  * Author: José Serrado Marques
  * Date: 2021/05
  * 
+ * My advice:
+ * - Create a folder a priori with the month of the measurement. example: "2021-05"
+ * - Have a good image file name. example: "PS-speck_100x". Macro will add wavelength name to the final PDF file
  * 
  */
+print("\\Clear");
+imgID = getImageID();
 
-print("\\Clear");
+// dialog box, because Script Parameters were not working for me
+items = newArray("WideField", "Confocal");
+items2 = newArray("25x", "40x", "50x", "60x", "63x", "100x");
+Dialog.create("PSF Settings");
+Dialog.addChoice("Microscope Type", items, items[1]);
+Dialog.addNumber("Wavelength", 510);
+Dialog.addNumber("NA", 1.4);
+Dialog.addChoice("Objective", items2, items2[4]);
+Dialog.show();
 
 // variables
+mic_type = Dialog.getChoice();
+wavelength = Dialog.getNumber();
+num_ape = Dialog.getNumber();
+objective = Dialog.getChoice();
 psf_number = 1;
-num_ape = 1.4;
-objective = "63x";
-wavelength = 510;
 
 // paths
 input = getDir("folder to save PSF info PDFs");
 output = input + File.separator + objective;
 File.makeDirectory(output);
+selectImage(imgID);
 
 // user selects bead to measure PSF. yellow ROI is current bead, red ROIs are measured beads
 start_while = true;
 while (start_while) {
 	if (psf_number == 1) {
-		makeRectangle(50, 50, 69, 69);
+		getDimensions(width, height, channels, slices, frames);
+		setSlice(slices / 2);
+		makeRectangle(width / 2, height / 2, 69, 69);
 		run("Select None");
 	}
 	run("Restore Selection");
@@ -47,7 +63,7 @@ while (start_while) {
 		// code to measure the beads
 		print("ROI detected. Measuring PSF number " + psf_number);
 		
-		runPSFmeasureBaby(psf_number, wavelength, num_ape, output);
+		runPSFmeasureBaby(psf_number, wavelength, num_ape, mic_type, output);
 		
 		// pretty rois as overlay to see calculated beads
 		Overlay.addSelection("red");
@@ -63,14 +79,14 @@ while (start_while) {
 }
 
 
-function runPSFmeasureBaby(psf_number, wavelength, num_ape, output) {
+function runPSFmeasureBaby(psf_number, wavelength, num_ape, mic_type, output) {
 	// run code to prepare bead for metroloj	
 	org_name = getTitle();
 	final_name = substring(org_name, 0, lastIndexOf(org_name, "."));
 	run("Duplicate...", "duplicate");
-	wave_name =  "wavelength" + wavelength + "_zebra_" + final_name + "_bead_" + psf_number;
+	wave_name =  "wavelength" + wavelength + "_" + final_name + "_bead_" + psf_number;
 	rename(wave_name);
-	run("Generate PSF report", "microscope=Confocal wavelength=" + wavelength + " na=" + num_ape + " pinhole=1 text1=[Sample infos:\n] text2=Comments:\n scale=5 save=[" + output + File.separator + wave_name + ".pdf]");
+	run("Generate PSF report", "microscope=" + mic_type + " wavelength=" + wavelength + " na=" + num_ape + " pinhole=1 text1=[Sample infos:\n] text2=Comments:\n scale=5 save=[" + output + File.separator + wave_name + ".pdf]");
 	selectWindow(org_name);
 	close("\\Others");
 }
