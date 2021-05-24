@@ -28,5 +28,5 @@ Soon to come:
 - measure for different channels
 
 My advice:
-- Create a folder a priori with the month of the measurement. example: "2021-05"
+- Create a folder *a priori* with the month of the measurement. example: "2021-05"
 - Have a good image file name. example: "PS-speck_100x". Macro will add wavelength name to the final PDF file.
