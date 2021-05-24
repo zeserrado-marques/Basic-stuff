@@ -1,24 +1,24 @@
 /*
- * Macro to facilitate PSF measurement with metroloJ. PSF iamge needs to be open
+ * Macro to facilitate PSF measurement with MetroloJ. PSF image needs to be open
  * Currently works only for single channel images.
- * 
+ *
  * Dependencies:
  * - MetroloJ
  * - iText library v2.1.4
- * 
+ *
  * Soon to come:
  * - measure for different channels
- * 
- * 
+ *
+ *
  * MetroloJ - https://imagejdocu.tudor.lu/plugin/analysis/metroloj/start
- * 
+ *
  * Author: José Serrado Marques
  * Date: 2021/05
- * 
- * My advice:
+ *
+ * My advice:
  * - Create a folder a priori with the month of the measurement. example: "2021-05"
  * - Have a good image file name. example: "PS-speck_100x". Macro will add wavelength name to the final PDF file
- * 
+ *
  */
 print("\\Clear");
 imgID = getImageID();
@@ -62,9 +62,9 @@ while (start_while) {
 	if (x != 0 || y != 0) {
 		// code to measure the beads
 		print("ROI detected. Measuring PSF number " + psf_number);
-		
+
 		runPSFmeasureBaby(psf_number, wavelength, num_ape, mic_type, output);
-		
+
 		// pretty rois as overlay to see calculated beads
 		Overlay.addSelection("red");
 		run("Select None");
@@ -80,7 +80,7 @@ while (start_while) {
 
 
 function runPSFmeasureBaby(psf_number, wavelength, num_ape, mic_type, output) {
-	// run code to prepare bead for metroloj	
+	// run code to prepare bead for metroloj
 	org_name = getTitle();
 	final_name = substring(org_name, 0, lastIndexOf(org_name, "."));
 	run("Duplicate...", "duplicate");
@@ -90,5 +90,3 @@ function runPSFmeasureBaby(psf_number, wavelength, num_ape, mic_type, output) {
 	selectWindow(org_name);
 	close("\\Others");
 }
-
-
