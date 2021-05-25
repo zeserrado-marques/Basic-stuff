@@ -47,7 +47,7 @@ wavelengths = dialogWavelengthChoices(channels);
 
 // paths
 input = getDir("folder to save PSF info PDFs");
-output = input + File.separator + objective + "_test_channels";
+output = input + File.separator + objective;
 File.makeDirectory(output);
 selectImage(imgID);
 
