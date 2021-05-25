@@ -24,9 +24,7 @@ Script that opens a single position from a .czi file and does a Maximum intensit
 Macro to facilitate PSF measurement with MetroloJ
 (PSF image needs to be open in ImageJ). Currently works only for single channel images.
 
-Soon to come:
-- measure for different channels
 
 My advice:
 - Create a folder *a priori* with the month of the measurement. example: "2021-05"
-- Have a good image file name. example: "PS-speck_100x". Macro will add wavelength name to the final PDF file.
+- Have a good image file name. example: *PS-speck_100x*. Macro will add wavelength name to the final PDF file.
