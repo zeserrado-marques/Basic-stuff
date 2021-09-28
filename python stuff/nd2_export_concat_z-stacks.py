@@ -24,11 +24,10 @@ def openzeds(img_list, zeds, xy_index, img_shape, data_type):
 
 # input path, pixel and voxel size
 path = input('insert path to folder with images: ')
-if path == '':
-    path = 'G:\\zemarques\\user_images\\Nuria\\export'
 try:
     pixelsize, voxeldepth = map(float, (input('insert pixel size and voxel depth, seperated by a space: ').split(' ')))
 except:
+    # these values are for the 100x 1.4NA objective from Nikon HCS at AIF facility
     pixelsize, voxeldepth = (0.0646893, 0.2)
     print(f'pixel size will be {pixelsize} and voxel depth {voxeldepth}')
 
