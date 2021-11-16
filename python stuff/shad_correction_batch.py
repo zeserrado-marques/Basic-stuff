@@ -37,6 +37,9 @@ def processFolder(parent_dir, output_dir, mean_multiplier):
                 processFile(path_current, output_dir, mean_multiplier)
             # copy nd file
             elif path_current.endswith('.nd'):
+                if not os.path.isdir(output_dir):
+                    os.makedirs(output_dir)
+                    
                 to_copy = output_dir + os.path.basename(path_current)
                 to_copy.encode('unicode_escape')
                 shutil.copyfile(path_current, to_copy)
