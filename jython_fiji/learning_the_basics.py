@@ -13,7 +13,6 @@ img_name = imp.getTitle()
 # string slicing baby
 img_name = img_name[:img_name.find(".png")]
 
-
 # save the image
 # create a FileSaver instance with "imp" as its parameter 
 fs = FileSaver(imp)
@@ -22,5 +21,9 @@ fs = FileSaver(imp)
 #fs.save()
 
 # we can write the folder + filename where we want to save the image as a parameter for any of the save methods FileSaver has.
-save_folder = r"G:\zemarques\user_images\carolinaPereira" + os.sep + img_name + ".tif"
-fs.saveAsTiff(save_folder)
+# be wary that this overwrites the file
+save_folder = r"G:\zemarques\user_images\carolinaPereira"
+save_file = save_folder + os.sep + img_name + ".tif"
+fs.saveAsTiff(save_file)
+
+# let's write if statments to prevent that
