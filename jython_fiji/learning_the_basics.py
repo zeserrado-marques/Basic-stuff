@@ -22,7 +22,7 @@ fs = FileSaver(imp)
 
 # we can write the folder + filename where we want to save the image as a parameter for any of the save methods FileSaver has.
 # be wary that this overwrites the file
-save_folder = r"G:\zemarques\user_images\carolinaPereira"
+save_folder = r"drive:\insert\path\here"
 save_file = save_folder + os.sep + img_name + ".tif"
 fs.saveAsTiff(save_file)
 
