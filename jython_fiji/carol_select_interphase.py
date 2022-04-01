@@ -1,18 +1,13 @@
 from ij import IJ
 from ij import WindowManager as WM
+from ij.plugin import ZProjector
 
-def findMipName(str1, str2):
-	return str1 if str1.find("MAX_") > -1 else str2
+raw_img = IJ.getImage()
 
-# get all images
-images = map(WM.getImage, WM.getIDList())
+#imp_duplicated = new Duplicator().run(imp, 1, 1, 1, 26, 1, 40);
+# mip_img = ZProjector.run(imp,"max all");
 
-# gets titles and turns them into a string. getImageTitles returns a unicode element
-lst_titles = map(str, WM.getImageTitles())
+IJ.run("Z Project...", "projection=[Max Intensity] all")
 
-# get image name with "MAX_"
-mip_name = reduce(findMipName, lst_titles)
-
-
-IJ.selectWindow(mip_name)
+mip_img = IJ.getImage()
 
