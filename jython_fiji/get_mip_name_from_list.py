@@ -10,6 +10,5 @@ lst_titles = map(str, WM.getImageTitles())
 # get image name with "MAX_"
 mip_name = reduce(lambda x, y: x if x.find("MAX_") > -1 else y, lst_titles)
 
-
 IJ.selectWindow(mip_name)
 
