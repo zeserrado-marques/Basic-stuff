@@ -4,10 +4,8 @@ from ij.plugin import ZProjector
 
 raw_img = IJ.getImage()
 
-#imp_duplicated = new Duplicator().run(imp, 1, 1, 1, 26, 1, 40);
-# mip_img = ZProjector.run(imp,"max all");
-
-IJ.run("Z Project...", "projection=[Max Intensity] all")
-
-mip_img = IJ.getImage()
+# MIP
+max_project = ZProjector.run(raw_img, "max all")
+max_project.show()
+IJ.run("Enhance Contrast", "saturated=0.35")
 
