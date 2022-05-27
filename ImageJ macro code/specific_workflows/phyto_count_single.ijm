@@ -12,9 +12,9 @@
  */
 
 // initialize
-run("Set Measurements...", "area mean perimeter shape feret's integrated median redirect=None decimal=4");
 img = getTitle();
 img_name = File.getNameWithoutExtension(img);
+run("Set Measurements...", "area mean standard perimeter fit shape redirect=" + img + " decimal=4");
 
 // color deconvolution
 run("RGB Color");

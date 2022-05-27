@@ -11,10 +11,6 @@
  * 
  */
 
-
-// initialize
-run("Set Measurements...", "area mean perimeter shape feret's integrated median redirect=None decimal=4");
-
 // variables
 extensions_array = newArray(".tif", ".czi");
 
@@ -60,6 +56,7 @@ function processFile(output, all_results_table) {
 	img = getTitle();
 	img_name = File.getNameWithoutExtension(img);
 	base_save_name = output + File.separator + img_name;
+	run("Set Measurements...", "area mean standard perimeter fit shape redirect=" + img + " decimal=4");
 	
 	// color deconvolution
 	run("RGB Color");
