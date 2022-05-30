@@ -57,6 +57,7 @@ function processFile(output, all_results_table) {
 	img_name = File.getNameWithoutExtension(img);
 	base_save_name = output + File.separator + img_name;
 	run("Set Measurements...", "area mean standard perimeter fit shape redirect=" + img + " decimal=4");
+	getPixelSize(unit, pixelWidth, pixelHeight);
 	
 	// color deconvolution
 	run("RGB Color");
@@ -79,8 +80,12 @@ function processFile(output, all_results_table) {
 	run("Fill Holes");
 	run("Open");
 	
+	// calibrate binary image
+	Stack.setXUnit(unit);
+	run("Properties...", "pixel_width=" + pixelWidth + " pixel_height=" + pixelHeight);
+	
 	// analyze particles
-	run("Analyze Particles...", "size=20-Infinity circularity=0.60-1.00 show=Masks display exclude clear summarize add");
+	run("Analyze Particles...", "size=20-Infinity circularity=0.70-1.00 show=Masks display exclude clear summarize add");
 	mask_img = getTitle();
 	
 	// rename ROIs and create column with name info
