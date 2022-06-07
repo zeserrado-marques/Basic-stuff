@@ -42,7 +42,7 @@ for (i = 0; i < list_files.length; i++) {
 
 // save big table and summarize
 Table.save(input + name_input + "_summarized_table.csv", "Summary");
-Table.save(input + name_input + "all_images_table.csv", all_results_table);
+Table.save(input + name_input + "_all_images_table.csv", all_results_table);
 
 end_time = getTime();
 runtime(start_time, end_time);
@@ -61,6 +61,7 @@ function processFile(output, all_results_table) {
 	
 	// color deconvolution
 	run("RGB Color");
+	rgb_image = getTitle();
 	run("Colour Deconvolution", "vectors=RGB");
 	
 	// close unnecessary windows (color matrix, red and blue windows)
@@ -85,8 +86,7 @@ function processFile(output, all_results_table) {
 	run("Properties...", "pixel_width=" + pixelWidth + " pixel_height=" + pixelHeight);
 	
 	// analyze particles
-	run("Analyze Particles...", "size=20-Infinity circularity=0.70-1.00 show=Masks display exclude clear summarize add");
-	mask_img = getTitle();
+	run("Analyze Particles...", "size=20-100 circularity=0.60-1.00 show=Nothing display exclude clear summarize add");
 	
 	// rename ROIs and create column with name info
 	n = roiManager("count");
@@ -95,6 +95,13 @@ function processFile(output, all_results_table) {
 		roiManager("rename", "phyto_" + (i+1));
 		setResult("Image Name", i, img_name + "_phyto_" + (i+1));
 	}
+	
+	// put ROIs overlay on RGB image
+	selectWindow(rgb_image);
+	roiManager("deselect");
+	roiManager("show all");
+	run("Flatten");
+	burned_overlay = getTitle();
 	
 	// table concatenation
 	concatTables(all_results_table);
@@ -107,7 +114,7 @@ function processFile(output, all_results_table) {
 	selectWindow("Results");
 	saveAs("results", base_save_name + "_results_table.csv");
 	// mask image
-	selectWindow(mask_img);
+	selectWindow(burned_overlay);
 	saveAs("tiff", base_save_name + "_cell_mask.tif");
 	
 	// close all

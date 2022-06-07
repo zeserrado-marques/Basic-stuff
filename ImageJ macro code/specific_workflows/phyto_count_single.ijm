@@ -19,6 +19,7 @@ getPixelSize(unit, pixelWidth, pixelHeight);
 
 // color deconvolution
 run("RGB Color");
+rgb_image = getTitle();
 run("Colour Deconvolution", "vectors=RGB");
 
 // close unnecessary windows (color matrix, red and blue windows)
@@ -43,7 +44,7 @@ Stack.setXUnit(unit);
 run("Properties...", "pixel_width=" + pixelWidth + " pixel_height=" + pixelHeight);
 
 // analyze particles
-run("Analyze Particles...", "size=20-Infinity circularity=0.70-1.00 show=Masks display exclude clear summarize add");
+run("Analyze Particles...", "size=20-100 circularity=0.60-1.00 show=Masks display exclude clear summarize add");
 mask_img = getTitle();
 
 n = roiManager("count");
@@ -53,7 +54,9 @@ for (i = 0; i < n; i++) {
 	setResult("Image Name", i, img_name + "_phyto_" + (i+1));
 }
 
-selectWindow(img);
+selectWindow(rgb_image);
+roiManager("deselect");
+roiManager("show all");
 
-
+//selectWindow(img);
 
