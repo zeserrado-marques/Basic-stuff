@@ -90,35 +90,38 @@ function processFile(output, all_results_table) {
 	
 	// rename ROIs and create column with name info
 	n = roiManager("count");
-	for (i = 0; i < n; i++) {
-		roiManager("select", i);
-		roiManager("rename", "phyto_" + (i+1));
-		setResult("Image Name", i, img_name + "_phyto_" + (i+1));
+	if (n>0) {
+		for (i = 0; i < n; i++) {
+			roiManager("select", i);
+			roiManager("rename", "phyto_" + (i+1));
+			setResult("Image Name", i, img_name + "_phyto_" + (i+1));
+		}
+		// put ROIs overlay on RGB image
+		selectWindow(rgb_image);
+		roiManager("deselect");
+		roiManager("show all");
+		run("Flatten");
+		burned_overlay = getTitle();
+		
+		// table concatenation
+		concatTables(all_results_table);
+		
+		// save stuff
+		// ROIs
+		roiManager("deselect");
+		roiManager("save", base_save_name + "_ROIs.zip");
+		// Results
+		selectWindow("Results");
+		saveAs("results", base_save_name + "_results_table.csv");
+		// mask image
+		selectWindow(burned_overlay);
+		saveAs("tiff", base_save_name + "_cell_mask.tif");
+		// close roi manager
+		roiManager("deselect");
+		roiManager("delete");
 	}
 	
-	// put ROIs overlay on RGB image
-	selectWindow(rgb_image);
-	roiManager("deselect");
-	roiManager("show all");
-	run("Flatten");
-	burned_overlay = getTitle();
-	
-	// table concatenation
-	concatTables(all_results_table);
-	
-	// save stuff
-	// ROIs
-	roiManager("deselect");
-	roiManager("save", base_save_name + "_ROIs.zip");
-	// Results
-	selectWindow("Results");
-	saveAs("results", base_save_name + "_results_table.csv");
-	// mask image
-	selectWindow(burned_overlay);
-	saveAs("tiff", base_save_name + "_cell_mask.tif");
-	
 	// close all
-	roiManager("delete");
 	run("Clear Results");
 	close("*");
 }
