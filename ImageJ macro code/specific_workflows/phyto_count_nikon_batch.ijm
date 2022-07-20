@@ -88,8 +88,9 @@ function processFile(output, all_results_table) {
 		}
 		// put ROIs overlay on RGB image
 		selectWindow(img);
+		run("Duplicate...", "title=" + img_name + "overlay");
 		roiManager("deselect");
-		roiManager("show all");
+		roiManager("show all with labels");
 		run("Flatten");
 		burned_overlay = getTitle();
 		
@@ -106,6 +107,7 @@ function processFile(output, all_results_table) {
 		// mask image
 		selectWindow(burned_overlay);
 		saveAs("tiff", base_save_name + "_cell_mask.tif");
+		
 		// close roi manager
 		roiManager("deselect");
 		roiManager("delete");
